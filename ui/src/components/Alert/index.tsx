@@ -16,15 +16,19 @@ const Alert = () => {
 		}, TIMEOUT);
 	};
 
-	return (
-		<Box sx={{ px: 4, position: 'fixed', left: '20vw', right: '20vw', bottom: '2rem', zIndex: 100 }}>
-			<Fade in={alert.visible} addEndListener={handleTimeoutAlert}>
-				<MUIAlert severity={alert.severity} data-testid='alert'>
-					{alert.message}
-				</MUIAlert>
-			</Fade>
-		</Box>
-	);
+	if (alert.visible) {
+		return (
+			<Box sx={{ px: 4, position: 'fixed', left: '20vw', right: '20vw', bottom: '2rem', zIndex: 100 }}>
+				<Fade in={alert.visible} addEndListener={handleTimeoutAlert}>
+					<MUIAlert severity={alert.severity} data-testid='alert'>
+						{alert.message}
+					</MUIAlert>
+				</Fade>
+			</Box>
+		);
+	}
+
+	return null;
 };
 
 export default Alert;
