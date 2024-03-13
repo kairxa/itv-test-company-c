@@ -71,12 +71,12 @@ export default defineConfig({
 	/* Run your local dev server before starting the tests */
 	webServer: [
 		{
-			command: process.env.CI ? 'cd ui && npm run backend' : 'npm run backend',
+			command: 'npm run backend',
 			url: 'http://127.0.0.1:5044',
 			reuseExistingServer: !process.env.CI,
 		},
 		{
-			command: process.env.CI ? 'cd ui && npm run start' : 'npm run start',
+			command: 'npm run start',
 			url: 'http://127.0.0.1:3000',
 			reuseExistingServer: !process.env.CI,
 		},
