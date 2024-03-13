@@ -1,11 +1,15 @@
-interface IClient {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
+interface ILocale {
+	clients: IClientsLocale;
 }
 
-interface IApplicationState {
-  clients: IClient[];
+interface IAlert {
+	severity: 'error' | 'warning' | 'info' | 'success';
+	message: string;
+	visible: boolean;
+}
+
+type Locale = 'en' | 'id';
+interface IGlobalState {
+	locale: Locale;
+	alert: IAlert;
 }
