@@ -40,15 +40,26 @@ We can also change the locale with a click of a button.
 
 Smaller screen views. It's always difficult to view tabular data inside the phone screen width.
 
-## Some more explanations
+## Relevant Notes
+
+1. If time wasn't a constraint what else would you have done?
+
+I'd like to put more thoughts into typings and interfaces. My current approach to them is prototyping mode, so I think they look kind of messy. I would also like to do the backend part, as I've never touched C# before. I also want to try remaking this application in C# + HTMX combo, as lately I found that going back to the roots feels like a breeze compared to the complexity of modern JS frameworks.
+
+2. How was this test overall? I.e too hard, too easy, how long it took, etc
+
+Overall, the test is what I wanted from an interview. It reflects the majority of front-end tasks in a real working environment. It helps the candidate to see what is expected from them when they work in Carepatron. I can also see that the colleagues in Carepatron are actual developers who are in touch with the reality of the working environment. In regards to how long it took, this test took me around 3.5 work days to do, so I'd say the difficulty is quite right.
+
+## Extras explanations
+
 2. a. If you needed to change something in the future (size/color of buttons), how easy would it be?  
-This is my first time using MUI. I do not know yet what their best practices are, and it was kinda confusing since on some components they offer multiple ways to style it. For example, a specific width prop while also enabling sx prop on several components. I need more time to consider which one is better, but in case of quick changes, it is easy since we are using either their built-in props or CSS values inside sx prop.
+   This is my first time using MUI. I do not know yet what their best practices are, and it was kinda confusing since on some components they offer multiple ways to style it. For example, some components have a specific width prop while also enabling sx prop. I need more time to consider which one is better, but in case of quick changes, it is easy since we are using either their built-in props or CSS values inside sx prop.
 
 3. b. How is state managed as the codebase grows?  
-I am not a big fan of global state management. Several years ago, this caused multiple headaches and also difficulty in testing at the company I worked in. It also made the codebase very unwieldy and everyone was afraid to make changes. Referencing where the state was used was also a nightmare. Therefore, a scope-limited context/state is preferable. We still have a global state, but that's for globally-accessed components like locale or alert.
+   I am not a big fan of global state management. Several years ago, this caused multiple headaches and also difficulty in testing at the company I worked in. It also made the codebase very unwieldy and everyone was afraid to make changes. Referencing where the state was used was also a nightmare. Therefore, a scope-limited context/state is preferable. We still have a global state, but that's for globally-accessed components like locale or alert.
 
 4. How can you ensure the app behaves as you intend it to?  
-Sufficient testing is needed. I included Playwright as my testing framework, as I found using jest (and its related libraries) causes a lot of headaches in boilerplate. Not to mention because we want to emulate the browser's behaviors, we need to write codes for that as well. For example, one thing that confuses me and some of my friends the most is timer management. In jest, we need to add `jest.useFakeTimers` and call manually `jest.runAllTimers`, and more often than not question why the test still does not work properly. Using Playwright (or a similar test framework like Cypress), because it uses real browsers and actual behaviors, this is not an issue. Tests become fun to write and easier to understand as well.
+   Sufficient testing is needed. I included Playwright as my testing framework, as I found using jest (and its related libraries) causes a lot of headaches in boilerplate. Not to mention because we want to emulate the browser's behaviors, we need to write codes for that as well. For example, one thing that confuses me and some of my friends the most is timer management. In jest, we need to add `jest.useFakeTimers` and call manually `jest.runAllTimers`, and more often than not question why the test still does not work properly. Using Playwright (or a similar test framework like Cypress), because it uses real browsers and actual behaviors, this is not an issue. Tests become fun to write and easier to understand as well.
 
 5. How intuitive is the behavior of the app?  
-I am not a good UI/UX designer. For example, I don't think it's clear enough for users to know that they can input phone numbers or emails instead of the client's name. However, the field is not long enough to include a placeholder highlighting that point. So on that point, I don't think it's that intuitive. On another part, it is quite clear that we need to search first before seeing the list of clients because an empty message is written in the table. When creating a new client, it is also easy to use because there are indicators about the validity of the fields.
+   I am not a good UI/UX designer. For example, I don't think it's clear enough for users to know that they can input phone numbers or emails instead of the client's name. However, the field is not long enough to include a placeholder highlighting that point. So on that point, I don't think it's that intuitive. However, on another part, it is quite clear that we need to search first before seeing the list of clients because an empty message is written in the table. When creating a new client, it is also easy to use because there are indicators about the validity of the fields.
