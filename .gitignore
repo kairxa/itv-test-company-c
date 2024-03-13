@@ -127,4 +127,4 @@ ui/cypress/videos/*
 **/DontCommit.sql
 
 mock-api/build
-mock-api/package-lock.json
+mock-api/node_modules
