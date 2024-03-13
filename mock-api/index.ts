@@ -27,7 +27,12 @@ app.get('/', (req: Request, res: Response) => {
 
 // get clients
 app.get('/clients', (req: Request, res: Response) => {
-	res.send(listClients());
+	const page = parseInt(req.query.page as string, 10);
+	const perPage = parseInt(req.query.perPage as string, 10);
+	const name = req.query.name as string;
+	const email = req.query.email as string;
+	const phoneNumber = req.query.phoneNumber as string;
+	res.send(listClients({ page, perPage, name, email, phoneNumber }));
 });
 
 // create client
