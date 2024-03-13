@@ -75,16 +75,18 @@ test('create new client', async ({ page }) => {
 	// Asserting continue button is still disabled
 	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
-	// Asserting that filling last name does not change continue button state
+	// Asserting that filling last name only does not change continue button state
 	await page.fill('#client-create-input-last-name', 'Doe');
 	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
-	// Asserting that filling first name enables continue button
+	// Asserting that filling first name only does not change continue button state
+	await page.fill('#client-create-input-last-name', '');
 	await page.fill('#client-create-input-first-name', 'John');
-	await expect(page.locator('button[aria-label="Continue"]')).not.toHaveAttribute('disabled');
+	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
 	// Clicking continue button
 	// Asserting that create client button is disabled
+	await page.fill('#client-create-input-last-name', 'Doe');
 	await page.click('button[aria-label="Continue"]');
 	await expect(page.locator('button[aria-label="Create client"]')).toHaveAttribute('disabled');
 
@@ -100,8 +102,8 @@ test('create new client', async ({ page }) => {
 	await page.fill('#client-create-input-email', 'john.doe@gmail.com');
 	await expect(page.locator('#client-create-input-email-helper-text')).not.toBeVisible();
 
-	// Asserting that filling valid email enables Create client button
-	await expect(page.locator('button[aria-label="Create client"]')).not.toHaveAttribute('disabled');
+	// Asserting that filling valid email still disables Create client button
+	await expect(page.locator('button[aria-label="Create client"]')).toHaveAttribute('disabled');
 
 	// Asserting that deleting email disables Create client button and shows error message
 	await page.fill('#client-create-input-email', '');
@@ -116,7 +118,8 @@ test('create new client', async ({ page }) => {
 	await page.fill('#client-create-input-phone-number', '123456789');
 	await expect(page.locator('#client-create-input-phone-number-helper-text')).not.toBeVisible();
 
-	// Asserting that filling valid phone number enables Create client button
+	// Asserting that filling valid phone number and email enables Create client button
+	await page.fill('#client-create-input-email', 'john.doe@gmail.com')
 	await expect(page.locator('button[aria-label="Create client"]')).not.toHaveAttribute('disabled');
 
 	// Creating client should show success message

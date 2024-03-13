@@ -29,12 +29,12 @@ const ClientCreateDialog = ({ dialogTexts, onRefreshClients }: Props) => {
 	const [email, setEmail] = useState({ value: '', touched: false });
 	const [phoneNumber, setPhoneNumber] = useState({ value: '', touched: false });
 
-	const isPersonalDetailNextButtonDisabled = !firstName;
+	const isPersonalDetailNextButtonDisabled = !firstName || !lastName;
 	const isEmailValid = checkEmailValidity(email.value);
 	const shouldShowEmailError = !isEmailValid && email.touched;
 	const isPhoneNumberValid = checkPhoneNumberValidity(phoneNumber.value);
 	const shouldShowPhoneNumberError = !isPhoneNumberValid && phoneNumber.touched;
-	const isContactDetailNextButtonDisabled = !isEmailValid && !isPhoneNumberValid;
+	const isContactDetailNextButtonDisabled = !isEmailValid || !isPhoneNumberValid;
 
 	const handleChangeFirstName = (e: React.ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value);
 	const handleChangeLastName = (e: React.ChangeEvent<HTMLInputElement>) => setLastName(e.target.value);
@@ -107,6 +107,7 @@ const ClientCreateDialog = ({ dialogTexts, onRefreshClients }: Props) => {
 								size='small'
 								fullWidth
 								margin='normal'
+								required
 							/>
 							<Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
 								<Button
