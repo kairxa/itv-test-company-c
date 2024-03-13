@@ -20,21 +20,34 @@ export const id: ILocale = {
 			},
 		},
 		dialogs: {
-			create: {
-				title: 'Buat klien baru',
+			upsert: {
+				title: {
+					create: 'Buat klien baru',
+					edit: 'Edit klien',
+				},
 				firstNameLabel: 'Nama Depan',
 				lastNameLabel: 'Nama Belakang',
 				emailLabel: 'Email',
 				phoneNumberLabel: 'Nomor Telepon',
 				stepperPersonalDetailsLabel: 'Detail Pribadi',
 				stepperContactDetailsLabel: 'Detail Kontak',
-				stepperPersonalDetailsButtonLabel: 'Lanjutkan',
-				stepperContactDetailsButtonLabel: 'Buat klien',
-				stepperContactDetailsButtonBackLabel: 'Kembali',
 				errorPhoneNumberHelperText: 'Nomor telepon tidak valid',
 				errorEmailHelperText: 'Email tidak valid',
-				createClientErrorMessage: 'Gagal membuat klien',
-				createClientSuccessMessage: 'Klien berhasil dibuat',
+				errorMessage: {
+					create: 'Gagal membuat klien',
+					edit: 'Gagal mengedit klien',
+				},
+				successMessage: {
+					create: 'Klien berhasil dibuat',
+					edit: 'Klien berhasil diedit',
+				},
+				buttonContinueLabel: 'Lanjutkan',
+				buttonSubmitLabel: {
+					create: 'Buat klien',
+					edit: 'Edit klien',
+				},
+				buttonBackLabel: 'Kembali',
+				buttonCloseLabel: 'Tutup',
 			},
 		},
 	},

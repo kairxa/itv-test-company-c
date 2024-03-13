@@ -19,21 +19,34 @@ export const en: ILocale = {
 			},
 		},
 		dialogs: {
-			create: {
-				title: 'Create new client',
+			upsert: {
+				title: {
+					create: 'Create new client',
+					edit: 'Edit client',
+				},
 				firstNameLabel: 'First Name',
 				lastNameLabel: 'Last Name',
 				emailLabel: 'Email',
 				phoneNumberLabel: 'Phone Number',
 				stepperPersonalDetailsLabel: 'Personal Details',
 				stepperContactDetailsLabel: 'Contact Details',
-				stepperPersonalDetailsButtonLabel: 'Continue',
-				stepperContactDetailsButtonLabel: 'Create client',
-				stepperContactDetailsButtonBackLabel: 'Back',
 				errorPhoneNumberHelperText: 'Invalid phone number',
 				errorEmailHelperText: 'Invalid email',
-				createClientErrorMessage: 'Failed to create client',
-				createClientSuccessMessage: 'Client created successfully',
+				errorMessage: {
+					create: 'Failed to create client',
+					edit: 'Failed to edit client',
+				},
+				successMessage: {
+					create: 'Client created successfully',
+					edit: 'Client edited successfully',
+				},
+				buttonContinueLabel: 'Continue',
+				buttonSubmitLabel: {
+					create: 'Create client',
+					edit: 'Edit client',
+				},
+				buttonBackLabel: 'Back',
+				buttonCloseLabel: 'Close',
 			},
 		},
 	},

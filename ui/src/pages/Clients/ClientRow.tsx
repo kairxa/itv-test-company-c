@@ -1,13 +1,22 @@
-import { Link, TableCell, TableRow } from '@mui/material';
+import { Button, TableCell, TableRow } from '@mui/material';
 import { formatPhoneNumber } from '../../utils/phoneNumberFormatter';
+import { useContext } from 'react';
+import { ACTIONS_CLIENTS, ClientsStateContext } from './ClientsDataProvider';
 
 export interface IProps {
 	client: IClient;
 }
 
 export default function ClientListItem({ client }: IProps) {
+	const { dispatch } = useContext(ClientsStateContext);
 	const { id, firstName, lastName, email, phoneNumber } = client;
 	const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+
+	const handleClientEditDialogOpen = () => {
+		dispatch({ type: ACTIONS_CLIENTS.UPSERT_DIALOG_TYPE_CHANGE, data: 'edit' });
+		dispatch({ type: ACTIONS_CLIENTS.UPSERT_DIALOG_TOGGLE, data: true });
+		dispatch({ type: ACTIONS_CLIENTS.SET_SELECTED_CLIENT, data: client });
+	};
 
 	return (
 		<TableRow
@@ -21,15 +30,13 @@ export default function ClientListItem({ client }: IProps) {
 			}}
 		>
 			<TableCell component='th' scope='row' data-testid='table-clients-row-name'>
-				<Link
-					href={`/${id}`}
-					underline='none'
-					sx={{
-						fontWeight: 600,
-					}}
+				<Button
+					aria-label={`Edit ${firstName} ${lastName}`}
+					onClick={handleClientEditDialogOpen}
+					sx={{ textTransform: 'capitalize', fontWeight: 600, p: 0 }}
 				>
 					{firstName} {lastName}
-				</Link>
+				</Button>
 			</TableCell>
 			<TableCell data-testid='table-clients-row-phone-number'>{formattedPhoneNumber}</TableCell>
 			<TableCell>{email}</TableCell>

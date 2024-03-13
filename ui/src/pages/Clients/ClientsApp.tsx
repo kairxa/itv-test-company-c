@@ -6,7 +6,7 @@ import ClientTable from './ClientTable';
 import { getClients } from '../../services/api';
 import { locale as localeSource } from '../../locale';
 import ClientMenu from './ClientMenu';
-import ClientCreateDialog from './ClientCreateDialog';
+import ClientUpsertDialog from './ClientUpsertDialog';
 import { GlobalStateContext } from '../../store/GlobalDataProvider';
 import { checkEmailValidity, checkPhoneNumberValidity } from '../../utils/fieldVerifications';
 
@@ -61,7 +61,7 @@ const ClientsApp = () => {
 			<Paper sx={{ margin: 'auto', marginTop: 3 }}>
 				<ClientTable clients={clients} columnNames={list.columns} emptyMessage={list.emptyLabel} />
 			</Paper>
-			<ClientCreateDialog dialogTexts={dialogs.create} onRefreshClients={handleGetClients} />
+			<ClientUpsertDialog dialogTexts={dialogs.upsert} onRefreshClients={handleGetClients} />
 		</Page>
 	);
 };

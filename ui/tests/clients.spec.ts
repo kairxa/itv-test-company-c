@@ -47,15 +47,15 @@ test('search keyword "a" and change page', async ({ page }) => {
 	await expect(page.getByTestId('table-clients-row-name').nth(0)).toHaveText('Frank Miller');
 });
 
-test('change rows per page and search keyword "a"', async ({ page }) => {
+test('change rows per page and search keyword "c"', async ({ page }) => {
 	await page.goto('/');
 
-	await page.fill('#table-client-input-search', 'a');
+	await page.fill('#table-client-input-search', 'c');
 	await page.click('div[data-testid="table-client-select-rows-per-page"] > div');
 	await page.click('li[data-value="10"]');
 	await page.click('button[type="submit"]');
 
-	await expect(page.getByTestId('table-clients-row-name')).toHaveCount(9);
+	await expect(page.getByTestId('table-clients-row-name')).toHaveCount(3); // Not gonna change throughout development because: 1. c is not on keyboard homerow, 2. my name has no c, 3. John Doe has no c.
 });
 
 test('change to ID language', async ({ page }) => {
@@ -76,53 +76,99 @@ test('create new client', async ({ page }) => {
 	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
 	// Asserting that filling last name only does not change continue button state
-	await page.fill('#client-create-input-last-name', 'Doe');
+	await page.fill('#client-upsert-input-last-name', 'Doe');
 	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
 	// Asserting that filling first name only does not change continue button state
-	await page.fill('#client-create-input-last-name', '');
-	await page.fill('#client-create-input-first-name', 'John');
+	await page.fill('#client-upsert-input-last-name', '');
+	await page.fill('#client-upsert-input-first-name', 'John');
 	await expect(page.locator('button[aria-label="Continue"]')).toHaveAttribute('disabled');
 
 	// Clicking continue button
 	// Asserting that create client button is disabled
-	await page.fill('#client-create-input-last-name', 'Doe');
+	await page.fill('#client-upsert-input-last-name', 'Doe');
 	await page.click('button[aria-label="Continue"]');
 	await expect(page.locator('button[aria-label="Create client"]')).toHaveAttribute('disabled');
 
 	// Asserting that there is no error message while input is not yet touched
-	await expect(page.locator('#client-create-input-email-helper-text')).not.toBeVisible();
-	await expect(page.locator('#client-create-input-phone-number-helper-text')).not.toBeVisible();
+	await expect(page.locator('#client-upsert-input-email-helper-text')).not.toBeVisible();
+	await expect(page.locator('#client-upsert-input-phone-number-helper-text')).not.toBeVisible();
 
 	// Asserting that filling invalid email shows error message
-	await page.fill('#client-create-input-email', 'john.doe');
-	await expect(page.locator('#client-create-input-email-helper-text')).toHaveText('Invalid email');
+	await page.fill('#client-upsert-input-email', 'john.doe');
+	await expect(page.locator('#client-upsert-input-email-helper-text')).toHaveText('Invalid email');
 
 	// Asserting that filling valid email hides error message
-	await page.fill('#client-create-input-email', 'john.doe@gmail.com');
-	await expect(page.locator('#client-create-input-email-helper-text')).not.toBeVisible();
+	await page.fill('#client-upsert-input-email', 'john.doe@gmail.com');
+	await expect(page.locator('#client-upsert-input-email-helper-text')).not.toBeVisible();
 
 	// Asserting that filling valid email still disables Create client button
 	await expect(page.locator('button[aria-label="Create client"]')).toHaveAttribute('disabled');
 
 	// Asserting that deleting email disables Create client button and shows error message
-	await page.fill('#client-create-input-email', '');
+	await page.fill('#client-upsert-input-email', '');
 	await expect(page.locator('button[aria-label="Create client"]')).toHaveAttribute('disabled');
-	await expect(page.locator('#client-create-input-email-helper-text')).toHaveText('Invalid email');
+	await expect(page.locator('#client-upsert-input-email-helper-text')).toHaveText('Invalid email');
 
 	// Asserting that filling invalid phone number shows error message
-	await page.fill('#client-create-input-phone-number', '123');
-	await expect(page.locator('#client-create-input-phone-number-helper-text')).toHaveText('Invalid phone number');
+	await page.fill('#client-upsert-input-phone-number', '123');
+	await expect(page.locator('#client-upsert-input-phone-number-helper-text')).toHaveText('Invalid phone number');
 
 	// Asserting that filling valid phone number hides error message
-	await page.fill('#client-create-input-phone-number', '123456789');
-	await expect(page.locator('#client-create-input-phone-number-helper-text')).not.toBeVisible();
+	await page.fill('#client-upsert-input-phone-number', '123456789');
+	await expect(page.locator('#client-upsert-input-phone-number-helper-text')).not.toBeVisible();
 
 	// Asserting that filling valid phone number and email enables Create client button
-	await page.fill('#client-create-input-email', 'john.doe@gmail.com')
+	await page.fill('#client-upsert-input-email', 'john.doe@gmail.com');
 	await expect(page.locator('button[aria-label="Create client"]')).not.toHaveAttribute('disabled');
 
 	// Creating client should show success message
 	await page.click('button[aria-label="Create client"]');
 	await expect(page.locator('div[data-testid="alert"]')).toHaveText('Client created successfully');
+});
+
+test('edit client', async ({ page }) => {
+	await page.goto('/');
+
+	await page.fill('#table-client-input-search', 'alice');
+	await page.click('button[type="submit"]');
+	await page.click('button[aria-label="Edit Alice Johnson"]');
+
+	await expect(page.locator('#client-upsert-input-first-name')).toHaveValue('Alice');
+	await expect(page.locator('#client-upsert-input-last-name')).toHaveValue('Johnson');
+
+	await page.click('button[aria-label="Continue"]');
+
+	await expect(page.locator('#client-upsert-input-email')).toHaveValue('alice@gmail.com');
+	await expect(page.locator('#client-upsert-input-phone-number')).toHaveValue('+6192099105');
+
+	await page.click('button[aria-label="Edit client"]');
+
+	await expect(page.locator('div[data-testid="alert"]')).toHaveText('Client edited successfully');
+});
+
+test('back and forth dialog behavior between edit and create', async ({ page }) => {
+	await page.goto('/');
+
+	await page.fill('#table-client-input-search', 'alice');
+	await page.click('button[type="submit"]');
+	await page.click('button[aria-label="Edit Alice Johnson"]');
+
+	await expect(page.locator('#client-upsert-input-first-name')).toHaveValue('Alice');
+	await expect(page.locator('#client-upsert-input-last-name')).toHaveValue('Johnson');
+
+	await page.click('button[aria-label="Continue"]');
+
+	await expect(page.locator('#client-upsert-input-email')).toHaveValue('alice@gmail.com');
+	await expect(page.locator('#client-upsert-input-phone-number')).toHaveValue('+6192099105');
+
+	await page.click('button[aria-label="Close"]');
+
+	await page.click('button[aria-label="Create new client"]');
+
+	await expect(page.locator('#client-upsert-input-first-name')).toHaveValue('');
+	await expect(page.locator('#client-upsert-input-last-name')).toHaveValue('');
+
+	await expect(page.locator('#client-upsert-input-email')).not.toBeVisible();
+	await expect(page.locator('#client-upsert-input-phone-number')).not.toBeVisible();
 });

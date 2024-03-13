@@ -12,21 +12,22 @@ interface IClientsTableMenuTexts {
 	paginationTooMuchLabel: string;
 }
 
-interface IClientsDialogCreateTexts {
-	title: string;
+interface IClientsDialogUpsertTexts {
+	title: ILocaleUpsertLabelsComposition;
 	firstNameLabel: string;
 	lastNameLabel: string;
 	emailLabel: string;
 	phoneNumberLabel: string;
 	stepperPersonalDetailsLabel: string;
 	stepperContactDetailsLabel: string;
-	stepperPersonalDetailsButtonLabel: string;
-	stepperContactDetailsButtonLabel: string;
-	stepperContactDetailsButtonBackLabel: string;
 	errorPhoneNumberHelperText: string;
 	errorEmailHelperText: string;
-	createClientSuccessMessage: string;
-	createClientErrorMessage: string;
+	successMessage: ILocaleUpsertLabelsComposition;
+	errorMessage: ILocaleUpsertLabelsComposition;
+	buttonContinueLabel: string;
+	buttonSubmitLabel: ILocaleUpsertLabelsComposition;
+	buttonBackLabel: string;
+	buttonCloseLabel: string;
 }
 
 interface IClientsTableListTexts {
@@ -41,7 +42,7 @@ interface IClientsTablesLocale {
 }
 
 interface IClientsDialogsTexts {
-	create: IClientsDialogCreateTexts;
+	upsert: IClientsDialogUpsertTexts;
 }
 
 interface IClientsLocale {
@@ -65,10 +66,14 @@ interface IClientsListGetParams extends IListGetParamsBase {
 
 type IClientListResponse = IGetResponse<IClient[]>;
 
+type IClientDialogType = 'create' | 'edit';
+
 interface IClientsState {
 	clientsResponse: IClientListResponse;
 	searchKeyword: string;
 	currentPage: number;
 	currentRowsPerPage: number;
-	isCreateDialogOpen: boolean;
+	isUpsertDialogOpen: boolean;
+	upsertDialogType: IClientDialogType;
+	selectedClient: IClient;
 }

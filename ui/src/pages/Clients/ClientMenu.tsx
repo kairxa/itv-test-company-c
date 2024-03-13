@@ -27,8 +27,13 @@ const ClientMenu = ({ menuTexts, clientsMeta }: { menuTexts: IClientsTableMenuTe
 	const handleSetCurrentPage = (page: number) => {
 		dispatch({ type: ACTIONS_CLIENTS.LIST_PAGE_CHANGE, data: page });
 	};
-	const handleClientCreateDialogToggle = () => {
-		dispatch({ type: ACTIONS_CLIENTS.CREATE_DIALOG_TOGGLE, data: !state.isCreateDialogOpen });
+	const handleClientUpsertDialogOpen = () => {
+		dispatch({ type: ACTIONS_CLIENTS.UPSERT_DIALOG_TYPE_CHANGE, data: 'create' });
+		dispatch({
+			type: ACTIONS_CLIENTS.SET_SELECTED_CLIENT,
+			data: { id: '', firstName: '', lastName: '', email: '', phoneNumber: '' },
+		});
+		dispatch({ type: ACTIONS_CLIENTS.UPSERT_DIALOG_TOGGLE, data: true });
 	};
 
 	// Both local state and handleSubmit can be deleted if we want to use debounce instead.
@@ -77,7 +82,7 @@ const ClientMenu = ({ menuTexts, clientsMeta }: { menuTexts: IClientsTableMenuTe
 					variant='contained'
 					size='large'
 					fullWidth
-					onClick={handleClientCreateDialogToggle}
+					onClick={handleClientUpsertDialogOpen}
 					aria-label={createClientLabel}
 				>
 					{createClientLabel}

@@ -6,7 +6,15 @@ const initialState: IClientsState = {
 	searchKeyword: '',
 	currentPage: 1,
 	currentRowsPerPage: 5,
-	isCreateDialogOpen: false,
+	isUpsertDialogOpen: false,
+	upsertDialogType: 'create',
+	selectedClient: {
+		id: '',
+		firstName: '',
+		lastName: '',
+		email: '',
+		phoneNumber: '',
+	},
 };
 
 export const ACTIONS_CLIENTS = {
@@ -14,8 +22,9 @@ export const ACTIONS_CLIENTS = {
 	SEARCH_KEYWORD_CHANGE: 'SEARCH_KEYWORD_CHANGE',
 	LIST_PAGE_CHANGE: 'LIST_PAGE_CHANGE',
 	LIST_ROWS_PER_PAGE_CHANGE: 'LIST_ROWS_PER_PAGE_CHANGE',
-	CREATE_DIALOG_TOGGLE: 'CREATE_DIALOG_TOGGLE',
-	LOCALE_CHANGE: 'LOCALE_CHANGE',
+	UPSERT_DIALOG_TOGGLE: 'UPSERT_DIALOG_TOGGLE',
+	UPSERT_DIALOG_TYPE_CHANGE: 'UPSERT_DIALOG_TYPE_CHANGE',
+	SET_SELECTED_CLIENT: 'SET_SELECTED_CLIENT',
 };
 
 type ActionClients = {
@@ -41,8 +50,14 @@ const reducer = (state: IClientsState, action: ActionClients): IClientsState => 
 			return { ...state, currentPage: action.data };
 		case ACTIONS_CLIENTS.LIST_ROWS_PER_PAGE_CHANGE:
 			return { ...state, currentRowsPerPage: action.data };
-		case ACTIONS_CLIENTS.CREATE_DIALOG_TOGGLE:
-			return { ...state, isCreateDialogOpen: !state.isCreateDialogOpen };
+		case ACTIONS_CLIENTS.UPSERT_DIALOG_TOGGLE:
+			return { ...state, isUpsertDialogOpen: action.data };
+		case ACTIONS_CLIENTS.UPSERT_DIALOG_TYPE_CHANGE:
+			console.log(action.data);
+			return { ...state, upsertDialogType: action.data };
+		case ACTIONS_CLIENTS.SET_SELECTED_CLIENT:
+			console.log(action.data);
+			return { ...state, selectedClient: action.data };
 		default:
 			return state;
 	}
