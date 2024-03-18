@@ -31,6 +31,8 @@ const ClientsApp = () => {
 			};
 
 			switch (true) {
+				// searchKeyword for phoneNumber can be full numbers (e.g. 02123456789)
+				// or a string that starts with a '+' and followed by numbers (e.g. +622123456789)
 				case !isNaN(parseInt(searchKeyword, 10)) || checkPhoneNumberValidity(searchKeyword):
 					params.phoneNumber = searchKeyword;
 					break;
